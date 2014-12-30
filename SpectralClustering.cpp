@@ -21,9 +21,15 @@ SpectralClustering::SpectralClustering(Eigen::MatrixXd& data, int numDims):
 	mNumDims(numDims),
 	mNumClusters(0)
 {
-	//TODO normalise affinity matrix?
+	Eigen::MatrixXd Deg = Eigen::MatrixXd::Zero(data.rows(),data.cols());
 
-	Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> s(data, true);
+	// calc normalised laplacian 
+	for ( int i=0; i < data.cols(); i++) {
+		Deg(i,i)=1/(sqrt((data.row(i).sum())) );
+	}
+	Eigen::MatrixXd Lapla = Deg * data * Deg;
+
+	Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> s(Lapla, true);
 	Eigen::VectorXd val = s.eigenvalues();
 	Eigen::MatrixXd vec = s.eigenvectors();
 
