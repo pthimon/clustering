@@ -1,7 +1,7 @@
 LibClustering
 =============
 
-This is a C++ library for clustering data based on its eigenvectors. It is based on the MATLAB code by L. Zelnik-Manor and P. Perona http://www.vision.caltech.edu/lihi/Demos/SelfTuningClustering.html. The self-tuning spectral clustering automatically finds the ideal number of clusters of an affinity matrix.
+This is a C++ port of the MATLAB code by L. Zelnik-Manor and P. Perona http://www.vision.caltech.edu/lihi/Demos/SelfTuningClustering.html. The self-tuning spectral clustering automatically finds the ideal number of clusters of an affinity matrix.
 
 Build
 -----
@@ -33,12 +33,13 @@ Example
 
 	#include <vector>
 	#inlcude <algorithm>
+	#include <iterator>
 	#include <cmath>
 	#include <Eigen/Core>
 	#include <clustering/SpectralClustering.h>
 	
 	int main() {
-		vector<int> items = {1,2,3,4,5,6,7,8,9,10};
+		std::vector<int> items = {1,2,3,4,5,6,7,8,9,10};
 	
 		// generate similarity matrix
 		unsigned int size = items.size();
@@ -47,7 +48,7 @@ Example
 		for (unsigned int i=0; i < size; i++) {
 			for (unsigned int j=0; j < size; j++) {
 				// generate similarity
-				int d = items[i] - items[j]
+				int d = items[i] - items[j];
 				int similarity = exp(-d*d / 100);
 				m(i,j) = similarity;
 				m(j,i) = similarity;
