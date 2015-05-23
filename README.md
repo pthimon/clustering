@@ -32,7 +32,7 @@ Example
 -------
 
 	#include <vector>
-	#inlcude <algorithm>
+	#include <algorithm>
 	#include <iterator>
 	#include <cmath>
 	#include <Eigen/Core>
