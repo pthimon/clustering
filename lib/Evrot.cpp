@@ -128,7 +128,7 @@ void Evrot::cluster_assign() {
 	int i,j;
 	for (int i=0; i<mNumData; i++ ) {
 		int row, col;
-		mXrot.row(i).cwise().abs().maxCoeff(&row, &col);
+		mXrot.row(i).cwiseAbs().maxCoeff(&row, &col);
 		max_index_col[i] = col;
 	}
 
@@ -144,7 +144,7 @@ void Evrot::cluster_assign() {
 
 double Evrot::evqual(Eigen::MatrixXd& X) {
 	// take the square of all entries and find max of each row
-	Eigen::MatrixXd X2 = X.cwise().pow(2);
+	Eigen::MatrixXd X2 = X.array().pow(2);
 	Eigen::VectorXd max_values = X2.rowwise().maxCoeff();
 
 	// compute cost
@@ -179,7 +179,7 @@ double Evrot::evqualitygrad(Eigen::VectorXd& theta, int angle_index) {
 	Eigen::VectorXi max_index_col(mNumData);
 	for (int i=0; i<mNumData; i++ ) {
 		int row, col;
-		Y.row(i).cwise().abs().maxCoeff(&row, &col);
+		Y.row(i).cwiseAbs().maxCoeff(&row, &col);
 		max_values[i] = Y(i,col);
 		max_index_col[i] = col;
 	}

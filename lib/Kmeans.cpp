@@ -7,6 +7,9 @@
 
 #include "Kmeans.h"
 
+#include <random>
+#include <iostream>
+
 #include <map>
 
 Kmeans::Kmeans() {
@@ -38,7 +41,7 @@ std::vector<std::vector<int> > Kmeans::cluster(Eigen::MatrixXd& data, int ncentr
 		bool flag;
 		do {
 			flag = false;
-			int randIndex = Eigen::ei_random(0,ndata-1);
+			int randIndex = rand() % ndata;
 			//make sure same row not chosen twice
 			for (unsigned int j=0; j < rands.size(); ++j) {
 				if (randIndex == rands[j]) {
@@ -98,7 +101,7 @@ std::vector<std::vector<int> > Kmeans::cluster(Eigen::MatrixXd& data, int ncentr
 		// Error value is total squared distance from cluster centres
 		double e = minvals.sum();
 		double ediff = fabs(old_e - e);
-		double cdiff = (centres-old_centres).cwise().abs().maxCoeff();
+		double cdiff = (centres-old_centres).cwiseAbs().maxCoeff();
 		std::cout << "Cycle " << n << " Error " << e << " Movement " << cdiff << ", " << ediff << std::endl;
 
 		if (n > 1) {
